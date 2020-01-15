@@ -34,7 +34,8 @@ def read_all() -> pd.DataFrame:
     """
     def read_file(file):
         df = read_cached(file).set_index('Page')
-        df.columns = df.columns.astype('M8[D]')
+        # 'M8[D]' is a 8 bype datetime type (M) (docs) with day (D) units
+        df.columns = pd.to_datetime(df.columns).floor('D')
         return df
 
     # Path to cached data
@@ -46,7 +47,7 @@ def read_all() -> pd.DataFrame:
         df = read_file('train_2')
         # Scraped data
         scraped = read_file('2017-08-15_2017-09-11')
-        # Update last two days by scraped data
+        # Update last two days by scraped data     没有找到这样做的原因
         df[pd.Timestamp('2017-09-10')] = scraped['2017-09-10']
         df[pd.Timestamp('2017-09-11')] = scraped['2017-09-11']
 
@@ -74,7 +75,7 @@ def read_x(start, end) -> pd.DataFrame:
     """
     df = read_all()
     # User GoogleAnalitycsRoman has really bad data with huge traffic spikes in all incarnations.
-    # Wikipedia banned him, we'll ban it too
+    # Wikipedia banned him, we'll ban it too     实际问题的特殊处理
     bad_roman = df.index.str.startswith("User:GoogleAnalitycsRoman")
     df = df[~bad_roman]
     if start and end:
@@ -85,6 +86,9 @@ def read_x(start, end) -> pd.DataFrame:
         return df
 
 
+# Numba translates Python functions to optimized machine code
+# You don't need to replace the Python interpreter, run a separate compilation step, or even have a C/C++ compiler installed. 
+# Just apply one of the Numba decorators to your Python function, and Numba does the rest.
 @numba.jit(nopython=True)
 def single_autocorr(series, lag):
     """
@@ -100,6 +104,8 @@ def single_autocorr(series, lag):
     ds1 = s1 - ms1
     ds2 = s2 - ms2
     divider = np.sqrt(np.sum(ds1 * ds1)) * np.sqrt(np.sum(ds2 * ds2))
+    # 基于样本估计标准差和协方差    皮尔逊相关系数
+    # 除0会报错
     return np.sum(ds1 * ds2) / divider if divider != 0 else 0
 
 
@@ -131,7 +137,7 @@ def batch_autocorr(data, lag, starts, ends, threshold, backoffset=0):
             c_365 = single_autocorr(series, lag)
             c_364 = single_autocorr(series, lag-1)
             c_366 = single_autocorr(series, lag+1)
-            # Average value between exact lag and two nearest neighborhs for smoothness
+            # Average value between exact lag and two nearest neighbors for smoothness
             corr[i] = 0.5 * c_365 + 0.25 * c_364 + 0.25 * c_366
         else:
             corr[i] = np.NaN
@@ -181,6 +187,7 @@ def prepare_data(start, end, valid_threshold) -> Tuple[pd.DataFrame, pd.DataFram
     inv_mask = ~page_mask
     df = df[inv_mask]
     nans = pd.isnull(df)
+    # for real-valued input, log1p is more accurate for small x 
     return np.log1p(df.fillna(0)), nans, starts[inv_mask], ends[inv_mask]
 
 
@@ -238,6 +245,9 @@ def uniq_page_map(pages:Collection):
             prev_page = page
             num_page += 1
         result[num_page, agents[agent]] = i
+    # page已经提前排好了序
+    # 有些page的url相同，但代理不同，一开始初始化了一个较大的二维数组
+    # num_page就是不相同的url的个数（从0开始的）
     return result[:num_page+1]
 
 
@@ -259,45 +269,36 @@ def normalize(values: np.ndarray):
     return (values - values.mean()) / np.std(values)
 
 
-def run():
-    parser = argparse.ArgumentParser(description='Prepare data')
-    parser.add_argument('data_dir')
-    parser.add_argument('--valid_threshold', default=0.0, type=float, help="Series minimal length threshold (pct of data length)")
-    parser.add_argument('--add_days', default=64, type=int, help="Add N days in a future for prediction")
-    parser.add_argument('--start', help="Effective start date. Data before the start is dropped")
-    parser.add_argument('--end', help="Effective end date. Data past the end is dropped")
-    parser.add_argument('--corr_backoffset', default=0, type=int, help='Offset for correlation calculation')
-    args = parser.parse_args()
-
+def run(args):    
     # Get the data
-    df, nans, starts, ends = prepare_data(args.start, args.end, args.valid_threshold)
+    df, nans, starts, ends = prepare_data(args['start'], args['end'], args['valid_threshold'])
 
     # Our working date range
     data_start, data_end = df.columns[0], df.columns[-1]
 
     # We have to project some date-dependent features (day of week, etc) to the future dates for prediction
-    features_end = data_end + pd.Timedelta(args.add_days, unit='D')
+    features_end = data_end + pd.Timedelta(args['add_days'], unit='D')
     print(f"start: {data_start}, end:{data_end}, features_end:{features_end}")
 
     # Group unique pages by agents
-    assert df.index.is_monotonic_increasing
+    assert df.index.is_monotonic_increasing # 判断index是不是单调增
     page_map = uniq_page_map(df.index.values)
 
     # Yearly(annual) autocorrelation
-    raw_year_autocorr = batch_autocorr(df.values, 365, starts, ends, 1.5, args.corr_backoffset)
+    raw_year_autocorr = batch_autocorr(df.values, 365, starts, ends, 1.5, args['corr_backoffset'])
     year_unknown_pct = np.sum(np.isnan(raw_year_autocorr))/len(raw_year_autocorr)  # type: float
 
     # Quarterly autocorrelation
-    raw_quarter_autocorr = batch_autocorr(df.values, int(round(365.25/4)), starts, ends, 2, args.corr_backoffset)
+    raw_quarter_autocorr = batch_autocorr(df.values, int(round(365.25/4)), starts, ends, 2, args['corr_backoffset'])
     quarter_unknown_pct = np.sum(np.isnan(raw_quarter_autocorr)) / len(raw_quarter_autocorr)  # type: float
 
     print("Percent of undefined autocorr = yearly:%.3f, quarterly:%.3f" % (year_unknown_pct, quarter_unknown_pct))
 
-    # Normalise all the things
-    year_autocorr = normalize(np.nan_to_num(raw_year_autocorr))
+    # Normalize all the things
+    year_autocorr = normalize(np.nan_to_num(raw_year_autocorr)) # replace NaN with 0 and infinity with large finite numbers
     quarter_autocorr = normalize(np.nan_to_num(raw_quarter_autocorr))
 
-    # Calculate and encode page features
+    # Calculate and encode page features (site, contry, etc)
     page_features = make_page_features(df.index.values)
     encoded_page_features = encode_page_features(page_features)
 
@@ -306,13 +307,13 @@ def run():
     #dow = normalize(features_days.dayofweek.values)
     week_period = 7 / (2 * np.pi)
     dow_norm = features_days.dayofweek.values / week_period
-    dow = np.stack([np.cos(dow_norm), np.sin(dow_norm)], axis=-1)
+    dow = np.stack([np.cos(dow_norm), np.sin(dow_norm)], axis=-1) # 纵向连接，两列
 
-    # Assemble indices for quarterly lagged data
+    # Assemble 聚集 indices 指数 for quarterly lagged data
     lagged_ix = np.stack(lag_indexes(data_start, features_end), axis=-1)
 
     page_popularity = df.median(axis=1)
-    page_popularity = (page_popularity - page_popularity.mean()) / page_popularity.std()
+    page_popularity = (page_popularity - page_popularity.mean()) / page_popularity.std() # 标准化
 
     # Put NaNs back
     df[nans] = np.NaN
@@ -338,12 +339,29 @@ def run():
         data_start=data_start,
         data_end=data_end,
         features_end=features_end
-
     )
 
     # Store data to the disk
-    VarFeeder(args.data_dir, tensors, plain)
+    VarFeeder(args['data_dir'], tensors, plain)
 
 
 if __name__ == '__main__':
-    run()
+    parser = argparse.ArgumentParser(description='Prepare data')
+    parser.add_argument('data_dir')
+    parser.add_argument('--valid_threshold', default=0.0, type=float, help="Series minimal length threshold (pct of data length)")
+    parser.add_argument('--add_days', default=64, type=int, help="Add N days in a future for prediction")
+    parser.add_argument('--start', help="Effective start date. Data before the start is dropped")
+    parser.add_argument('--end', help="Effective end date. Data past the end is dropped")
+    parser.add_argument('--corr_backoffset', default=0, type=int, help='Offset for correlation calculation')
+    args = parser.parse_args()
+    
+    # 将args转成dict
+    params = dict(
+        data_dir = args.data_dir,
+        valid_threshold = args.valid_threshold,
+        add_days = args.add_days,
+        start = args.start,
+        end = args.end,
+        corr_backoffset = args.corr_backoffset )
+       
+    run(params)

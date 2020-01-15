@@ -1,0 +1,73 @@
+
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" version="1.1" width="911.1719970703125" height="164">
+              <defs>
+                <style type="text/css">svg {
+            background-color: #fff; }
+          
+          .root text,
+          .root tspan {
+            font: 12px Arial; }
+          
+          .root path {
+            fill-opacity: 0;
+            stroke-width: 2px;
+            stroke: #000; }
+          
+          .root circle {
+            fill: #6b6659;
+            stroke-width: 2px;
+            stroke: #000; }
+          
+          .anchor text, .any-character text {
+            fill: #fff; }
+          
+          .anchor rect, .any-character rect {
+            fill: #6b6659; }
+          
+          .escape text, .charset-escape text, .literal text {
+            fill: #000; }
+          
+          .escape rect, .charset-escape rect {
+            fill: #bada55; }
+          
+          .literal rect {
+            fill: #dae9e5; }
+          
+          .charset .charset-box {
+            fill: #cbcbba; }
+          
+          .subexp .subexp-label tspan,
+          .charset .charset-label tspan,
+          .match-fragment .repeat-label tspan {
+            font-size: 10px; }
+          
+          .repeat-label {
+            cursor: help; }
+          
+          .subexp .subexp-label tspan,
+          .charset .charset-label tspan {
+            dominant-baseline: text-after-edge; }
+          
+          .subexp .subexp-box {
+            stroke: #908c83;
+            stroke-dasharray: 6,2;
+            stroke-width: 2px;
+            fill-opacity: 0; }
+          
+          .quote {
+            fill: #908c83; }
+          </style>
+              </defs>
+              <metadata>
+                <rdf:rdf>
+                  <cc:license rdf:about="http://creativecommons.org/licenses/by/3.0/">
+                    <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"></cc:permits>
+                    <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"></cc:permits>
+                    <cc:requires rdf:resource="http://creativecommons.org/ns#Notice"></cc:requires>
+                    <cc:requires rdf:resource="http://creativecommons.org/ns#Attribution"></cc:requires>
+                    <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"></cc:permits>
+                  </cc:license>
+                </rdf:rdf>
+              </metadata>
+            <desc>Created with Snap</desc><g class="root" transform="matrix(1,0,0,1,15,10)"><g class="regexp match" transform="matrix(1,0,0,1,10,0)"><path d="M103.71875,78H138.7188M163.390675,78H198.3906M385.07815,78H430.0782M616.7813249999999,78H636.7813M661.453175,78H691.4532M764.1251055175782,78H794.1251"></path><g class="match-fragment subexp" transform="matrix(1,0,0,1,0,45)"><rect rx="3" ry="3" class="subexp-box" transform="matrix(1,0,0,1,0,11)" width="128.71875" height="54"></rect><text x="0" y="0" class="subexp-label" transform="matrix(1,0,0,1,0,11)"><tspan>group #1</tspan></text><g class="regexp match match-fragment" transform="matrix(1,0,0,1,10,21)"><path d="M10,12q-10,0 -10,10v2q0,10 10,10h83.71875q10,0 10,-10v-2q0,-10 -10,-10M103.71875,27l5,-5m-5,5l-5,-5"></path><g class="any-character" transform="matrix(1,0,0,1,10,0)"><g class="label"><rect width="83.71875" height="24"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan>any character</tspan></text></g></g></g></g><g class="match-fragment literal" transform="matrix(1,0,0,1,138.7188,66)"><g class="label"><rect width="24.671875" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>_</tspan><tspan class="quote">”</tspan></text></g></g><g class="match-fragment" transform="matrix(1,0,0,1,173.3906,19)"><path d="M0,59q10,0 10,-10v-39q0,-10 10,-10h196.6875457763672q10,0 10,10v39q0,10 10,10"></path><g class="subexp" transform="matrix(1,0,0,1,15,10)"><rect rx="3" ry="3" class="subexp-box" transform="matrix(1,0,0,1,0,11)" width="206.6875457763672" height="65"></rect><text x="0" y="0" class="subexp-label" transform="matrix(1,0,0,1,0,11)"><tspan>group #2</tspan></text><g class="regexp match" transform="matrix(1,0,0,1,10,21)"><path d="M72.67190551757812,28H82.6719M155.34380551757812,28H165.3438"></path><g class="match-fragment charset" transform="matrix(1,0,0,1,0,0)"><rect rx="3" ry="3" class="charset-box" transform="matrix(1,0,0,1,0,11)" width="72.67190170288086" height="34"></rect><text x="0" y="0" class="charset-label" transform="matrix(1,0,0,1,0,11)"><tspan>One of:</tspan></text><g transform="matrix(1,0,0,1,5,16)"><g class="charset-range" transform="matrix(1,0,0,1,0,0)"><text x="0" y="0" transform="matrix(1,0,0,1,29.6719,16)">-</text><g class="literal" transform="matrix(1,0,0,1,0,0)"><g class="label"><rect width="24.671875" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>a</tspan><tspan class="quote">”</tspan></text></g></g><g class="literal" transform="matrix(1,0,0,1,38.6719,0)"><g class="label"><rect width="24" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>z</tspan><tspan class="quote">”</tspan></text></g></g></g></g></g><g class="match-fragment charset" transform="matrix(1,0,0,1,82.6719,0)"><rect rx="3" ry="3" class="charset-box" transform="matrix(1,0,0,1,0,11)" width="72.67190170288086" height="34"></rect><text x="0" y="0" class="charset-label" transform="matrix(1,0,0,1,0,11)"><tspan>One of:</tspan></text><g transform="matrix(1,0,0,1,5,16)"><g class="charset-range" transform="matrix(1,0,0,1,0,0)"><text x="0" y="0" transform="matrix(1,0,0,1,29.6719,16)">-</text><g class="literal" transform="matrix(1,0,0,1,0,0)"><g class="label"><rect width="24.671875" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>a</tspan><tspan class="quote">”</tspan></text></g></g><g class="literal" transform="matrix(1,0,0,1,38.6719,0)"><g class="label"><rect width="24" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>z</tspan><tspan class="quote">”</tspan></text></g></g></g></g></g><g class="match-fragment literal" transform="matrix(1,0,0,1,165.3438,16)"><g class="label"><rect width="21.34375" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>.</tspan><tspan class="quote">”</tspan></text></g></g></g></g></g><g class="match-fragment subexp" transform="matrix(1,0,0,1,420.0782,16)"><rect rx="3" ry="3" class="subexp-box" transform="matrix(1,0,0,1,0,11)" width="206.703125" height="102"></rect><text x="0" y="0" class="subexp-label" transform="matrix(1,0,0,1,0,11)"><tspan>group #3</tspan></text><g class="regexp" transform="matrix(1,0,0,1,10,21)"><path d="M10,22q0,-10 10,-10M176.703125,22q0,-10 -10,-10M0,41c10,0 10,0 20,0M186.703125,41c-10,0 -10,0 -20,0M10,60q0,10 10,10M176.703125,60q0,10 -10,10M0,41q10,0 10,-10V22M186.703125,41q-10,0 -10,-10V22M0,41q10,0 10,10V60M186.703125,41q-10,0 -10,10V60"></path><g transform="matrix(1,0,0,1,20,0)" class="regexp-matches"><path d="M0,12h29.3281M117.374975,12H146.703125M0,41h0M146.703125,41H146.703125M0,70h13.3359M133.36715,70H146.703125"></path><g class="match match-fragment subexp regexp literal" transform="matrix(1,0,0,1,29.3281,0)"><g class="label"><rect width="88.046875" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>wikipedia.org</tspan><tspan class="quote">”</tspan></text></g></g><g class="match match-fragment subexp regexp literal" transform="matrix(1,0,0,1,0,29)"><g class="label"><rect width="146.703125" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>commons.wikimedia.org</tspan><tspan class="quote">”</tspan></text></g></g><g class="match match-fragment subexp regexp literal" transform="matrix(1,0,0,1,13.3359,58)"><g class="label"><rect width="120.03125" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>www.mediawiki.org</tspan><tspan class="quote">”</tspan></text></g></g></g></g></g><g class="match-fragment literal" transform="matrix(1,0,0,1,636.7813,66)"><g class="label"><rect width="24.671875" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>_</tspan><tspan class="quote">”</tspan></text></g></g><g class="match-fragment subexp" transform="matrix(1,0,0,1,671.4532,0)"><rect rx="3" ry="3" class="subexp-box" transform="matrix(1,0,0,1,0,11)" width="112.67190551757812" height="133"></rect><text x="0" y="0" class="subexp-label" transform="matrix(1,0,0,1,0,11)"><tspan>group #4</tspan></text><g class="regexp match match-fragment" transform="matrix(1,0,0,1,10,21)"><path d="M10,57q-10,0 -10,10v36q0,10 10,10h72.67190551757812q10,0 10,-10v-36q0,-10 -10,-10"></path><g class="charset" transform="matrix(1,0,0,1,10,0)"><rect rx="3" ry="3" class="charset-box" transform="matrix(1,0,0,1,0,11)" width="72.67190170288086" height="92"></rect><text x="0" y="0" class="charset-label" transform="matrix(1,0,0,1,0,11)"><tspan>One of:</tspan></text><g transform="matrix(1,0,0,1,5,16)"><g class="charset-range" transform="matrix(1,0,0,1,0,0)"><text x="0" y="0" transform="matrix(1,0,0,1,29.6719,16)">-</text><g class="literal" transform="matrix(1,0,0,1,0,0)"><g class="label"><rect width="24.671875" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>a</tspan><tspan class="quote">”</tspan></text></g></g><g class="literal" transform="matrix(1,0,0,1,38.6719,0)"><g class="label"><rect width="24" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>z</tspan><tspan class="quote">”</tspan></text></g></g></g><g class="literal" transform="matrix(1,0,0,1,19,29)"><g class="label"><rect width="24.671875" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>_</tspan><tspan class="quote">”</tspan></text></g></g><g class="literal" transform="matrix(1,0,0,1,20.336,58)"><g class="label"><rect width="22" height="24" rx="3" ry="3"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan class="quote">“</tspan><tspan>-</tspan><tspan class="quote">”</tspan></text></g></g></g></g></g></g><g class="match-fragment" transform="matrix(1,0,0,1,794.1251,66)"><g class="label anchor"><rect width="67.046875" height="24"></rect><text x="0" y="0" transform="matrix(1,0,0,1,5,17)"><tspan>End of line</tspan></text></g></g></g><path d="M30,78H0M871.171975,78H881.1719970703125"></path><circle cx="0" cy="78" r="5"></circle><circle cx="881.1719970703125" cy="78" r="5"></circle></g></svg>
+          

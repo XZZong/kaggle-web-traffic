@@ -402,7 +402,7 @@ def train(name, hparams, multi_gpu=False, n_models=1, train_completeness_thresho
           forward_split=False, write_summaries=False, verbose=False, asgd_decay=None, tqdm=True,
           side_split=True, max_steps=None, save_from_step=None, do_eval=True, predict_window=63):
 
-    eval_k = int(round(26214 * eval_memsize / n_models))
+    eval_k = int(round(26214 * eval_memsize / n_models)) # 26214 不是2的幂，这是在干嘛？？
     eval_batch_size = int(
         eval_k / (hparams.rnn_depth * hparams.encoder_rnn_layers))  # 128 -> 1024, 256->512, 512->256
     eval_pct = 0.1

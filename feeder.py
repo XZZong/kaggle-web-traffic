@@ -48,6 +48,8 @@ class VarFeeder:
             os.mkdir(path)
 
         with open(_meta_file(path), mode='wb') as file:
+            # The pickle module implements binary protocols for serializing and de-serializing a Python object structure.
+            # Write the pickled representation of the object obj to the open file object file.
             pickle.dump(self, file)
 
         with tf.Graph().as_default():

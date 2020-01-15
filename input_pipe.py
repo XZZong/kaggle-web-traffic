@@ -24,16 +24,18 @@ class Split:
 class Splitter:
     def cluster_pages(self, cluster_idx: tf.Tensor):
         """
-        Shuffles pages so all user_agents of each unique pages stays together in a shuffled list
+        Shuffles 调整 pages so all user_agents of each unique pages stays together in a shuffled list
         :param cluster_idx: Tensor[uniq_pages, n_agents], each value is index of pair (uniq_page, agent) in other page tensors
         :return: list of page indexes for use in a global page tensors
         """
         size = cluster_idx.shape[0].value
         random_idx = tf.random_shuffle(tf.range(0, size, dtype=tf.int32), self.seed)
+        ## gather slices from params (cluster_idx) according to indices (random_idx)
         shuffled_pages = tf.gather(cluster_idx, random_idx)
         # Drop non-existent (uniq_page, agent) pairs. Non-existent pair has index value = -1
         mask = shuffled_pages >= 0
-        page_idx = tf.boolean_mask(shuffled_pages, mask)
+        ## return: tensor populated 填充 by entries in tensor (shuffled_pages) corresponding to True values in mask
+        page_idx = tf.boolean_mask(shuffled_pages, mask) # 把大于或等于0的都选出来
         return page_idx
 
     def __init__(self, tensors: List[tf.Tensor], cluster_indexes: tf.Tensor, n_splits, seed, train_sampling=1.0,
